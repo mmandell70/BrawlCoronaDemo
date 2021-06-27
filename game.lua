@@ -3,9 +3,11 @@ local Game = {}
 function Game.new()
     local self = {}
 
-    local MenuBuilder = require("menu.menu")
+    local MenuBase = require("menu.menu")
+    local SpriteSheetBase = require("helper.spritesheet")
 
     self.menu = nil
+    self.spriteSheetBuilder = nil
 
 
     self.totalGameTime = 0
@@ -52,7 +54,8 @@ function Game.new()
     end
 
     local function initialize()
-        self.menu = MenuBuilder.new()
+        self.menu = MenuBase.new()
+        self.spriteSheetBuilder = SpriteSheetBase.new()
     end
 
     initialize()
