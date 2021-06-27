@@ -7,7 +7,13 @@ function SpriteSheet.new()
         ["Standard"] = {
             width = 64,
             height = 64,
-            numFrames = 273
+            -- numFrames = 273
+            numFrames = 260
+        },
+        ["Large Weapon"] = {
+            width = 192,
+            height = 192,
+            numFrames = 32
         },
         ["Blood Explosion"] = {
             width = 512,
@@ -18,17 +24,17 @@ function SpriteSheet.new()
 
     self.spriteList = {
         ["Blood Explosion"] = {
-            sheet = graphics.newImageSheet( "images/units/explosion/bloodTilesheet1.png", self.sheetOptions["Blood Explosion"] ),
+            sheet = graphics.newImageSheet( "images/tilesheets/blood_explosion.png", self.sheetOptions["Blood Explosion"] ),
             sequenceName = 'BloodExplode',
         },
-        ["Skeleton"] = {
-            sheet = graphics.newImageSheet( "images/units/monster/skeleton.png", self.sheetOptions["Standard"] ),
+        ["Knight Sword"] = {
+            sheet = graphics.newImageSheet( "images/tilesheets/Knight_Sword.png", self.sheetOptions["Standard"] ),
             sequenceName = 'Standard',
         },
-        ["Skeleton Sword Only"] = {
-            sheet = graphics.newImageSheet( "images/units/monster/SkeletonSwordOnly.png", self.sheetOptions["Large Weapon"] ),
-            sequenceName = 'None',
-        },
+        -- ["Knight Sword Only"] = {
+        --     sheet = graphics.newImageSheet( "images/tilesheets/Knight_Sword_BigSwing.png", self.sheetOptions["Large Weapon"] ),
+        --     sequenceName = 'None',
+        -- },
     }
 
     self.sequences = {
@@ -146,114 +152,78 @@ function SpriteSheet.new()
                 loopCount = 1,
                 loopDirection = "forward"
             },
-            {
-                sheet = self.spriteList["Skeleton Sword Only"].sheet,
-                name = "attackSwordRight",
-                start = 25,
-                count = 6,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Sword Only"].sheet,
-                name = "attackSwordDown",
-                start = 17,
-                count = 6,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Sword Only"].sheet,
-                name = "attackSwordLeft",
-                start = 9,
-                count = 6,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Sword Only"].sheet,
-                name = "attackSwordUp",
-                start = 1,
-                count = 6,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Spear Only"].sheet,
-                name = "attackSpearRight",
-                start = 25,
-                count = 8,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Spear Only"].sheet,
-                name = "attackSpearDown",
-                start = 17,
-                count = 8,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Spear Only"].sheet,
-                name = "attackSpearLeft",
-                start = 9,
-                count = 8,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                sheet = self.spriteList["Skeleton Spear Only"].sheet,
-                name = "attackSpearUp",
-                start = 1,
-                count = 8,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                -- sheet = sheetSkeletonMage,
-                name = "castRight",
-                start = 40,
-                count = 7,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                -- sheet = sheetSkeletonMage,
-                name = "castDown",
-                start = 27,
-                count = 7,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                -- sheet = sheetSkeletonMage,
-                name = "castLeft",
-                start = 14,
-                count = 7,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
-            {
-                -- sheet = sheetSkeletonMage,
-                name = "castUp",
-                start = 1,
-                count = 7,
-                time = 800,
-                loopCount = 0,
-                loopDirection = "loop"
-            },
+            -- {
+            --     sheet = self.spriteList["Knight Sword Only"].sheet,
+            --     name = "attackSwordRight",
+            --     start = 25,
+            --     count = 6,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Sword Only"].sheet,
+            --     name = "attackSwordDown",
+            --     start = 17,
+            --     count = 6,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Sword Only"].sheet,
+            --     name = "attackSwordLeft",
+            --     start = 9,
+            --     count = 6,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Sword Only"].sheet,
+            --     name = "attackSwordUp",
+            --     start = 1,
+            --     count = 6,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Spear Only"].sheet,
+            --     name = "attackSpearRight",
+            --     start = 25,
+            --     count = 8,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Spear Only"].sheet,
+            --     name = "attackSpearDown",
+            --     start = 17,
+            --     count = 8,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Spear Only"].sheet,
+            --     name = "attackSpearLeft",
+            --     start = 9,
+            --     count = 8,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
+            -- {
+            --     sheet = self.spriteList["Knight Spear Only"].sheet,
+            --     name = "attackSpearUp",
+            --     start = 1,
+            --     count = 8,
+            --     time = 800,
+            --     loopCount = 0,
+            --     loopDirection = "loop"
+            -- },
             {
                 -- sheet = sheetSkeletonArcher,
                 name = "attackBowRight",
