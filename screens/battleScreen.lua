@@ -36,7 +36,6 @@ function BattleScreen.new()
         button:addEventListener("tap", buttonTapped)
 
         return button
-        
     end
 
     local function showButtons()
