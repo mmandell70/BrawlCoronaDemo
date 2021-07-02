@@ -7,8 +7,7 @@ function SpriteSheet.new()
         ["Standard"] = {
             width = 64,
             height = 64,
-            -- numFrames = 273
-            numFrames = 260
+            numFrames = 273
         },
         ["Large Weapon"] = {
             width = 192,
@@ -31,18 +30,32 @@ function SpriteSheet.new()
             sheet = graphics.newImageSheet( "images/tilesheets/Knight_Sword.png", self.sheetOptions["Standard"] ),
             sequenceName = 'Standard',
         },
-        -- ["Knight Sword Only"] = {
-        --     sheet = graphics.newImageSheet( "images/tilesheets/Knight_Sword_BigSwing.png", self.sheetOptions["Large Weapon"] ),
-        --     sequenceName = 'None',
-        -- },
+        ["Knight Sword Only"] = {
+            sheet = graphics.newImageSheet( "images/tilesheets/Knight_Sword_BigSwing.png", self.sheetOptions["Large Weapon"] ),
+            sequenceName = 'None',
+        },
+        ["Orc Spear"] = {
+            sheet = graphics.newImageSheet( "images/tilesheets/Orc_Spear.png", self.sheetOptions["Standard"] ),
+            sequenceName = 'Standard',
+        },
     }
 
     self.sequences = {
         ["Standard"] = {
             {
                 name = "walkRight",
+                -- start = 144,
+                start = 145,
+                -- count = 9,
+                count = 8,
+                time = 800,
+                loopCount = 0,
+                loopDirection = "forward"
+            },
+            {
+                name = "standRight",
                 start = 144,
-                count = 9,
+                count = 1,
                 time = 800,
                 loopCount = 0,
                 loopDirection = "forward"
@@ -51,6 +64,14 @@ function SpriteSheet.new()
                 name = "walkDown",
                 start = 131,
                 count = 9,
+                time = 800,
+                loopCount = 0,
+                loopDirection = "forward"
+            },
+            {
+                name = "standLeft",
+                start = 118,
+                count = 1,
                 time = 800,
                 loopCount = 0,
                 loopDirection = "forward"
@@ -152,15 +173,15 @@ function SpriteSheet.new()
                 loopCount = 1,
                 loopDirection = "forward"
             },
-            -- {
-            --     sheet = self.spriteList["Knight Sword Only"].sheet,
-            --     name = "attackSwordRight",
-            --     start = 25,
-            --     count = 6,
-            --     time = 800,
-            --     loopCount = 0,
-            --     loopDirection = "loop"
-            -- },
+            {
+                sheet = self.spriteList["Knight Sword Only"].sheet,
+                name = "attackSwordRight",
+                start = 25,
+                count = 6,
+                time = 800,
+                loopCount = 1,
+                loopDirection = "loop"
+            },
             -- {
             --     sheet = self.spriteList["Knight Sword Only"].sheet,
             --     name = "attackSwordDown",

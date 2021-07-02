@@ -8,10 +8,14 @@ function Menu.new()
 
     self.menuLayer = display.newGroup()
 
+    local function menuHidden()
+        game.battleScreen.setupScreen()
+    end
+
     local function startMenuTapped(event)
         print('Start Menu Tapped')
 
-        transition.to(self.menuLayer, { time=500, alpha=0} )
+        transition.to(self.menuLayer, { time=500, alpha=0, onComplete=menuHidden} )
         -- self.menuLayer.alpha = 0
     end
     
@@ -43,6 +47,7 @@ function Menu.new()
 
     function self.setup()
         game.gameLayer:insert(self.menuLayer)
+        self.menuLayer:toBack()
 
         setupBackgroundImage()
         setupMenuText()

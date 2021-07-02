@@ -4,11 +4,12 @@ function Game.new()
     local self = {}
 
     local MenuBase = require("menu.menu")
+    local BattleScreenBase = require("screens.battleScreen")
     local SpriteSheetBase = require("helper.spritesheet")
 
     self.menu = nil
+    self.battleScreen = nil
     self.spriteSheetBuilder = nil
-
 
     self.totalGameTime = 0
 
@@ -17,6 +18,7 @@ function Game.new()
     -- *************************************************
 
     self.gameLayer = display.newGroup()
+    self.unitLayer = display.newGroup()
 
     -- ************************************************************
     -- System Events
@@ -49,13 +51,26 @@ function Game.new()
     -- Initialization
     -- ************************************************************
 
+    local function setupLayers()
+        self.gameLayer:insert(self.unitLayer)
+    end
+
+    local function walkDone(knight)
+        knight:setSequence('attackSwordRight')
+        knight:play()
+    end
+
     function self.setup()
-        self.menu.setup()
+        -- self.menu.setup()
+        game.battleScreen.setupScreen()
     end
 
     local function initialize()
+        setupLayers()
+
         self.menu = MenuBase.new()
         self.spriteSheetBuilder = SpriteSheetBase.new()
+        self.battleScreen = BattleScreenBase.new()
     end
 
     initialize()
