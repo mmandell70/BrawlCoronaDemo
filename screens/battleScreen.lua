@@ -10,8 +10,38 @@ function BattleScreen.new()
 
     local buttons = {}
 
+    local function issueOrders(order)
+        print('Order: '..order)
+    end
+
     local function buttonTapped(event)
         print(event.target.name..' TAPPED!!!')
+    end
+
+    local function buttonTouched(event)
+        -- print('OnTouch '..event.phase..' '..event.target.name)
+        local t = event.target
+
+        local phase = event.phase
+
+        if "began" == phase then
+            display.currentStage:setFocus(t)
+            t.isFocus = true
+
+            t.background:setFillColor(colorsRGB.actualColorRGB('darkgreen'))
+        elseif t.isFocus then
+            if phase == 'ended' then
+                t.isFocus = false
+                display.currentStage:setFocus(nil)
+
+                t.background:setFillColor(colorsRGB.actualColorRGB('green'))
+
+                issueOrders(t.name)
+            end
+        end
+        -- Important to return true. This tells the system that the event
+        -- should not be propagated to listeners of any objects underneath.
+        return true
     end
 
     local function createButton(text)
@@ -21,6 +51,8 @@ function BattleScreen.new()
         local background = display.newRoundedRect(button, 0, 0, global.contentWidth * 0.75, 200, 30 )
         background.strokeWidth = 10
         background:setFillColor(colorsRGB.actualColorRGB('green'))
+
+        button.background = background
 
         local options = 
         {
@@ -33,7 +65,10 @@ function BattleScreen.new()
         }            
         local displayText = display.newText(options)
 
-        button:addEventListener("tap", buttonTapped)
+        button.displayText = displayText
+
+        -- button:addEventListener("tap", buttonTapped)
+        button:addEventListener("touch", buttonTouched)
 
         return button
     end
