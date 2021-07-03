@@ -11,7 +11,7 @@ function BattleScreen.new()
     local buttons = {}
 
     local function buttonTapped(event)
-        print(event.target.name..' TAPPED')
+        print(event.target.name..' TAPPED!')
     end
 
     local function createButton(text)
