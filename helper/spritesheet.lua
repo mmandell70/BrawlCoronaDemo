@@ -97,7 +97,7 @@ function SpriteSheet.new()
                 start = 196,
                 count = 6,
                 time = 800,
-                loopCount = 0,
+                loopCount = 1,
                 loopDirection = "loop"
             },
             {
@@ -113,7 +113,7 @@ function SpriteSheet.new()
                 start = 170,
                 count = 6,
                 time = 800,
-                loopCount = 0,
+                loopCount = 1,
                 loopDirection = "loop"
             },
             {
@@ -142,10 +142,10 @@ function SpriteSheet.new()
             },
             {
                 name = "thrustLeft",
-                start = 65,
-                count = 8,
+                start = 66,
+                count = 7,
                 time = 800,
-                loopCount = 0,
+                loopCount = 1,
                 loopDirection = "loop"
             },
             {

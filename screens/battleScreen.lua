@@ -12,6 +12,17 @@ function BattleScreen.new()
 
     local function issueOrders(order)
         print('Order: '..order)
+
+        if order == 'Strong Attack' then
+            leftUnit.performStrongAttack()
+            rightUnit.performStrongAttack()
+        elseif order == 'Light Attack' then
+            leftUnit.performLightAttack()
+            rightUnit.performLightAttack()
+        elseif order == 'Block Attack' then
+            leftUnit.performBlock()
+            rightUnit.performBlock()
+        end
     end
 
     local function buttonTapped(event)
@@ -89,8 +100,8 @@ function BattleScreen.new()
     end
 
     local function showUnits()
-        leftUnit = UnitBuilder.new('Knight Sword', 1)
-        rightUnit = UnitBuilder.new('Orc Spear', nil)
+        leftUnit = UnitBuilder.new('Knight Sword', 1, 10)
+        rightUnit = UnitBuilder.new('Orc Spear', nil, 10)
 
         leftUnit.walkToCenter()
         rightUnit.walkToCenter()
