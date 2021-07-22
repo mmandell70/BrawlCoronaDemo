@@ -19,6 +19,7 @@ function Game.new()
 
     self.gameLayer = display.newGroup()
     self.unitLayer = display.newGroup()
+    self.textLayer = display.newGroup()
 
     -- ************************************************************
     -- System Events
@@ -53,6 +54,7 @@ function Game.new()
 
     local function setupLayers()
         self.gameLayer:insert(self.unitLayer)
+        self.gameLayer:insert(self.textLayer)
     end
 
     local function walkDone(knight)
