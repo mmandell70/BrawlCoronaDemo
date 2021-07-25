@@ -2,7 +2,7 @@
 --
 -- main.lua
 --
--- Thomas Mandell
+-- Thomas Mandel
 -----------------------------------------------------------------------------------------
 
 require "helper.colors-rgb"
