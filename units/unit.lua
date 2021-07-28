@@ -16,14 +16,29 @@ function Unit.new(name, onLeft, startingHealth)
     self.lastAttack = nil
     local isAttacking = nil
 
+    self.isDead = false
+
     function self.takeDamage(amount)
         print('Damaged for '..amount)
 
         self.health = self.health - amount
-        -- print('Max Health: '..self.maxHealth..' Health: '..self.health)
 
-        if amount <= 0 then
+
+        print('Max Health: '..self.maxHealth..' Health: '..self.health)
+
+        if self.health <= 0 then
+            self.health = 0
+            self.isDead = true
             print('DIED!')
+            self.sprite:setSequence('die')
+            self.sprite:play()
+            if self.onLeft then 
+                game.battleScreen.displayFloatingText('You died')
+            else 
+                game.battleScreen.displayFloatingText('You defeated the enemy')
+                game.battleScreen.addScore()
+            end
+        
         end
 
         local barWidth = self.health / self.maxHealth

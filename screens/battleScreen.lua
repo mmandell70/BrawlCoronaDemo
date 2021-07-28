@@ -12,7 +12,9 @@ function BattleScreen.new()
 
     local floatingText = nil
 
-    local function displayFloatingText(text)
+    local score = 0
+
+    function self.displayFloatingText(text)
         floatingText.text = text
         floatingText.x = (global.contentWidth * 0.5)
         floatingText.y = 800
@@ -21,21 +23,30 @@ function BattleScreen.new()
         transition.to( floatingText, { time=3000, alpha=0} )
     end
 
+    function self.displayScore(text)
+        floatingText.text = text
+        floatingText.x = (global.contentWidth * 0.5)
+        floatingText.y = 200
+        floatingText.alpha = 100
+
+        -- transition.to( floatingText, { time=3000, alpha=0} )
+    end
+
     local function issueOrdersToAI()
         local aiAttack = math.random(3)
         --print('Random Attack: '..aiAttack)
         if aiAttack == 1 then
             rightUnit.performStrongAttack()
 
-            displayFloatingText('AI choose Strong Attack!')
+            self.displayFloatingText('AI choose Strong Attack!')
         elseif aiAttack == 2 then
             rightUnit.performLightAttack()
 
-            displayFloatingText('AI choose Light Attack!')
+            self.displayFloatingText('AI choose Light Attack!')
         elseif aiAttack == 3 then
             rightUnit.performBlock()
 
-            displayFloatingText('AI choose to Block')
+            self.displayFloatingText('AI choose to Block')
         end
     end
 
@@ -44,11 +55,12 @@ function BattleScreen.new()
 
         -- If the human unit is done, let the AI take a turn
         -- Also cause damage
+
         if unit.onLeft then
             issueOrdersToAI()
 
             if unit.lastAttack == 'Strong' then
-                rightUnit.takeDamage(10)
+                rightUnit.takeDamage(100)
             elseif unit.lastAttack == 'Light' then
                 rightUnit.takeDamage(5)
             elseif unit.lastAttack == 'Block' then
@@ -61,6 +73,11 @@ function BattleScreen.new()
             elseif unit.lastAttack == 'Block' then
             end
         end
+    end
+
+    function self.addScore() 
+        score = score + 1
+        self.displayScore(score)
     end
 
     local function issueOrders(order)
@@ -157,6 +174,8 @@ function BattleScreen.new()
 
         leftUnit.walkToCenter()
         rightUnit.walkToCenter()
+
+        self.displayScore(score)
     end
 
     local function createFloatingText()
