@@ -128,7 +128,7 @@ function Unit.new(name, onLeft, startingHealth)
         self.sprite = game.spriteSheetBuilder.generateSprite(self.spriteGroup, name)
         self.sprite:scale(8,8)
 
-        self.spriteGroup.y = 400
+        self.spriteGroup.y = 2000
 
         if self.onLeft == nil then
             self.spriteGroup.x = global.contentWidth + self.sprite.width

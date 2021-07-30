@@ -17,8 +17,9 @@ function BattleScreen.new()
     function self.displayFloatingText(text)
         floatingText.text = text
         floatingText.x = (global.contentWidth * 0.5)
-        floatingText.y = 800
+        floatingText.y = 1500
         floatingText.alpha = 100
+        floatingText:toFront()
 
         transition.to( floatingText, { time=3000, alpha=0} )
     end
@@ -26,8 +27,7 @@ function BattleScreen.new()
     function self.displayScore(text)
         floatingText.text = text
         floatingText.x = (global.contentWidth * 0.5)
-        floatingText.y = 200
-        floatingText.alpha = 100
+        floatingText.y = 1500
 
         -- transition.to( floatingText, { time=3000, alpha=0} )
     end
@@ -153,7 +153,7 @@ function BattleScreen.new()
 
     local function showButtons()
         local strongButton = createButton('Strong Attack')
-        strongButton.y = 1000
+        strongButton.y = 500
         strongButton.x = global.contentWidth * 0.5
         -- Strong, Light, Block
 
@@ -193,10 +193,18 @@ function BattleScreen.new()
         floatingText.alpha = 0
     end
 
+    local function createBackgroundImage()
+        local imageName = "images/background_grass.png"
+        self.backgroundImage = display.newImageRect(game.gameLayer, imageName, global.contentWidth, global.contentHeight)
+        self.backgroundImage.x = global.contentWidth * 0.5
+        self.backgroundImage.y = global.contentHeight * 0.5
+    end
+
     function self.setupScreen()
         createFloatingText()
         showButtons()
         showUnits()
+        createBackgroundImage()
     end
 
     local function initialize()
