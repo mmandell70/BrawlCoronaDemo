@@ -26,6 +26,10 @@ function SpriteSheet.new()
             sheet = graphics.newImageSheet( "images/tilesheets/blood_explosion.png", self.sheetOptions["Blood Explosion"] ),
             sequenceName = 'BloodExplode',
         },
+        ["Knight Spear"] = {
+            sheet = graphics.newImageSheet( "images/tilesheets/Knight_Spear.png", self.sheetOptions["Standard"] ),
+            sequenceName = 'Standard',
+        },
         ["Knight Sword"] = {
             sheet = graphics.newImageSheet( "images/tilesheets/Knight_Sword.png", self.sheetOptions["Standard"] ),
             sequenceName = 'Standard',
@@ -36,6 +40,14 @@ function SpriteSheet.new()
         },
         ["Orc Spear"] = {
             sheet = graphics.newImageSheet( "images/tilesheets/Orc_Spear.png", self.sheetOptions["Standard"] ),
+            sequenceName = 'Standard',
+        },
+        ["Skeleton Spear"] = {
+            sheet = graphics.newImageSheet( "images/tilesheets/Skeleton_Spear.png", self.sheetOptions["Standard"] ),
+            sequenceName = 'Standard',
+        },
+        ["Advanced Orc Spear"] = {
+            sheet = graphics.newImageSheet( "images/tilesheets/Orc_Spear2.png", self.sheetOptions["Standard"] ),
             sequenceName = 'Standard',
         },
     }
@@ -126,10 +138,10 @@ function SpriteSheet.new()
             },
             {
                 name = "thrustRight",
-                start = 91,
-                count = 8,
+                start = 92,
+                count = 7,
                 time = 800,
-                loopCount = 0,
+                loopCount = 1,
                 loopDirection = "loop"
             },
             {

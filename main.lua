@@ -9,13 +9,16 @@ require "helper.colors-rgb"
 require "helper.angle-functions"
 
 local GameBuilder = require("game")
+local SettingsBuilder = require("settings.generalSettings")
 local GlobalBuilder = require("helper.global")
 
 -- Do NOT make local so everyone can have access
 game = nil
 global = GlobalBuilder.new()
+settings = nil
 
 function setup()
+    settings = SettingsBuilder.new()
     game = GameBuilder.new()
     game.setup()
 end

@@ -1,11 +1,13 @@
 local Unit = {}
 
-function Unit.new(name, onLeft, startingHealth)
+function Unit.new(name, onLeft)
     local self = {}
 
     self.sprite = nil
-    self.health = startingHealth
-    self.maxHealth = startingHealth
+    self.health = nil
+    self.maxHealth = nil
+
+    self.settings = nil
 
     self.spriteGroup = nil
     self.healthBar = nil
@@ -19,6 +21,15 @@ function Unit.new(name, onLeft, startingHealth)
     self.isDead = false
 
     function self.takeDamage(amount)
+        if self.lastAttack == 'Block' then
+            -- Sheild takes some of the damage (or all)
+            amount = amount - self.settings.defendAmount
+
+            if amount < 0 then
+                amount = 0
+            end
+        end
+
         print('Damaged for '..amount)
 
         self.health = self.health - amount
@@ -46,27 +57,31 @@ function Unit.new(name, onLeft, startingHealth)
     end
 
     local function stand()
+        local action = 'stand'
         if self.onLeft then
-            self.sprite:pause()
-            self.sprite:setSequence('standRight')
-            self.sprite:setFrame(1)
+            action = action..'Right'
         else
-            self.sprite:pause()
-            self.sprite:setSequence('standLeft')
-            self.sprite:setFrame(1)
+            action = action..'Left'
         end
+
+        self.sprite:pause()
+        self.sprite:setSequence(action)
+        self.sprite:setFrame(1)
     end
 
     function self.performStrongAttack()
         isAttacking = 1
 
+        local attackAction = self.settings.strongAttackType
+
         if self.onLeft then
-            self.sprite:setSequence('attackSwordRight')
-            self.sprite:play()
+            attackAction = attackAction..'Right'
         else
-            self.sprite:setSequence('thrustLeft')
-            self.sprite:play()
+            attackAction = attackAction..'Left'
         end
+
+        self.sprite:setSequence(attackAction)
+        self.sprite:play()
 
         self.lastAttack = 'Strong'
     end
@@ -74,13 +89,16 @@ function Unit.new(name, onLeft, startingHealth)
     function self.performLightAttack()
         isAttacking = 1
 
+        local attackAction = self.settings.lightAttackType
+
         if self.onLeft then
-            self.sprite:setSequence('attackRight')
-            self.sprite:play()
+            attackAction = attackAction..'Right'
         else
-            self.sprite:setSequence('attackLeft')
-            self.sprite:play()
+            attackAction = attackAction..'Left'
         end
+
+        self.sprite:setSequence(attackAction)
+        self.sprite:play()
 
         self.lastAttack = 'Light'
     end
@@ -122,20 +140,7 @@ function Unit.new(name, onLeft, startingHealth)
         end
     end
 
-    local function initialize()
-        self.spriteGroup = display.newGroup()
-
-        self.sprite = game.spriteSheetBuilder.generateSprite(self.spriteGroup, name)
-        self.sprite:scale(8,8)
-
-        self.spriteGroup.y = 2000
-
-        if self.onLeft == nil then
-            self.spriteGroup.x = global.contentWidth + self.sprite.width
-        else
-            self.spriteGroup.x = -self.sprite.width - self.sprite.width
-        end
-
+    local function setupHealthBar()
         self.damageBar = display.newRect(self.spriteGroup, 0, 0, 200, 30)
         self.damageBar.anchorX = 0
         self.damageBar.y = -self.damageBar.height * 6
@@ -148,7 +153,29 @@ function Unit.new(name, onLeft, startingHealth)
         self.healthBar.y = self.damageBar.y
         self.healthBar.x = -self.healthBar.width * 0.5
         self.healthBar.strokeWidth = 0
-        self.healthBar:setFillColor( colorsRGB.RGB("green") )
+        self.healthBar:setFillColor( colorsRGB.RGB("green") )        
+    end
+
+    local function initialize()
+        self.settings = settings.unit.findByName(name)
+        self.health = self.settings.health
+        self.maxHealth = self.settings.health
+
+        self.spriteGroup = display.newGroup()
+
+        self.sprite = game.spriteSheetBuilder.generateSprite(self.spriteGroup, name)
+        self.sprite:scale(8,8)
+
+        self.spriteGroup.y = 2000
+        self.spriteGroup.y = global.contentHeight - (self.spriteGroup.height * 0.75)
+
+        if self.onLeft == nil then
+            self.spriteGroup.x = global.contentWidth + self.sprite.width
+        else
+            self.spriteGroup.x = -self.sprite.width - self.sprite.width
+        end
+
+        setupHealthBar()
 
         self.sprite:addEventListener( "sprite", spriteListener )
     end

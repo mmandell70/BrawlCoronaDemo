@@ -14,10 +14,12 @@ function BattleScreen.new()
 
     local score = 0
 
+    local floatingTextY = nil
+
     function self.displayFloatingText(text)
         floatingText.text = text
         floatingText.x = (global.contentWidth * 0.5)
-        floatingText.y = 1500
+        floatingText.y = floatingTextY
         floatingText.alpha = 100
         floatingText:toFront()
 
@@ -27,7 +29,7 @@ function BattleScreen.new()
     function self.displayScore(text)
         floatingText.text = text
         floatingText.x = (global.contentWidth * 0.5)
-        floatingText.y = 1500
+        floatingText.y = floatingTextY
 
         -- transition.to( floatingText, { time=3000, alpha=0} )
     end
@@ -60,16 +62,16 @@ function BattleScreen.new()
             issueOrdersToAI()
 
             if unit.lastAttack == 'Strong' then
-                rightUnit.takeDamage(100)
+                rightUnit.takeDamage(leftUnit.settings.strongAttackDamage)
             elseif unit.lastAttack == 'Light' then
-                rightUnit.takeDamage(5)
+                rightUnit.takeDamage(leftUnit.settings.lightAttackDamage)
             elseif unit.lastAttack == 'Block' then
             end
         else
             if unit.lastAttack == 'Strong' then
-                leftUnit.takeDamage(10)
+                leftUnit.takeDamage(rightUnit.settings.strongAttackDamage)
             elseif unit.lastAttack == 'Light' then
-                leftUnit.takeDamage(5)
+                leftUnit.takeDamage(rightUnit.settings.lightAttackDamage)
             elseif unit.lastAttack == 'Block' then
             end
         end
@@ -153,7 +155,7 @@ function BattleScreen.new()
 
     local function showButtons()
         local strongButton = createButton('Strong Attack')
-        strongButton.y = 500
+        strongButton.y = strongButton.height * 1.2
         strongButton.x = global.contentWidth * 0.5
         -- Strong, Light, Block
 
@@ -165,12 +167,16 @@ function BattleScreen.new()
         blockButton.y = lightButton.y + lightButton.height * 1.25
         blockButton.x = global.contentWidth * 0.5
 
+        floatingTextY = blockButton.y + blockButton.height
         --floatingText.y = strongButton.y - strongButton.height
     end
 
     local function showUnits()
-        leftUnit = UnitBuilder.new('Knight Sword', 1, 100)
-        rightUnit = UnitBuilder.new('Orc Spear', nil, 100)
+        -- leftUnit = UnitBuilder.new('Knight Sword', 1)
+        leftUnit = UnitBuilder.new('Knight Spear', 1)
+        -- rightUnit = UnitBuilder.new('Orc Spear', nil)
+        rightUnit = UnitBuilder.new('Skeleton Spear', nil)
+        -- rightUnit = UnitBuilder.new('Advanced Orc Spear', nil)
 
         leftUnit.walkToCenter()
         rightUnit.walkToCenter()
@@ -190,6 +196,8 @@ function BattleScreen.new()
         }            
         floatingText = display.newText(options)
 
+        floatingText:setFillColor( colorsRGB.RGB("black"))
+
         floatingText.alpha = 0
     end
 
@@ -198,6 +206,7 @@ function BattleScreen.new()
         self.backgroundImage = display.newImageRect(game.gameLayer, imageName, global.contentWidth, global.contentHeight)
         self.backgroundImage.x = global.contentWidth * 0.5
         self.backgroundImage.y = global.contentHeight * 0.5
+        self.backgroundImage:toBack()
     end
 
     function self.setupScreen()
